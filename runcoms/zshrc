@@ -11,3 +11,55 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+setopt CLOBBER # Do not overwrite existing files with > and >>
+
+if [ "$HOSTNAME" != "yoga" ]
+then
+    export MAIN_HOSTNAME=paprika
+else
+    export MAIN_HOSTNAME=yoga
+fi
+edit_file_in_emacs_console() {
+    emacsclient -t $@ || emacs -q -nw $@
+}
+
+function memo() {
+    echo "- Effacer les branches mergées sur release"
+    echo "git branch -a --merged release |sed -e 's/  remotes\/origin\//git push origin --delete /g'|grep -v ' release'|grep -v ' prod'"
+    echo "+ supprimer les branches locales"
+    echo "git remote prune origin"
+    echo
+    echo "- Find des fichiers les plus récents"
+    echo "find . -type f -printf '%T@ %p\n' | sort -k 1nr | sed 's/^[^ ]* //' | head -n 10"
+
+    echo "vpn"
+    echo "~/.juniper_networks/network_connect/ncsvc -h vpn.groupefigaro.com -u fdzorzi -r GroupeFigaro -f figaro.cert -L5"
+}
+
+function zssh() {
+    ssh -t $1 "zsh -1"
+}
+
+alias ls='ls --color'
+eval `dircolors`
+export CLICOLOR=xterm-color
+alias mountkobo='udisks --mount /dev/disk/by-id/usb-Kobo_eReader-3.7.0_N250491004859-0:0'
+alias unmountkobo='udisks --unmount /dev/disk/by-id/usb-Kobo_eReader-3.7.0_N250491004859-0:0'
+
+if grep -q 192.168.1.11 /etc/resolv.conf
+then
+    export CVSROOT=:pserver:fredz@cumin:/var/cvs
+else
+    export CVSROOT=:pserver:fredz@pimentech.net:/var/cvs
+fi
+export PORT=9999
+
+alias emacs=edit_file_in_emacs_console
+alias ll='ls -l'
+alias l='ls -CF'
+alias edit='emacsclient --no-wait'
+alias edt='emacsclient -t'
+alias py2ps="a2ps --tabsize=4 -f 8 -R --columns=1 "
+alias windows='rdesktop -k fr -g 1024x768 192.168.1.200'
+
+[[ -s "/etc/profile.d/vte.sh" ]] && . "/etc/profile.d/vte.sh"
