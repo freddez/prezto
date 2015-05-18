@@ -17,8 +17,8 @@ fi
 # Editors
 #
 
-export EDITOR='nano'
-export VISUAL='nano'
+export EDITOR='emacs -q -nw'
+export VISUAL='emacs'
 export PAGER='less'
 
 #
@@ -43,8 +43,9 @@ typeset -gU cdpath fpath mailpath path
 
 # Set the list of directories that Zsh searches for programs.
 path=(
-  /usr/local/{bin,sbin}
-  $path
+    $HOME/bin
+    /usr/local/{bin,sbin}
+    $path
 )
 
 #
