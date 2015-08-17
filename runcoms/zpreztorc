@@ -32,10 +32,11 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
-  'git' \
   'ssh' \
-  'emacs' \
+  'git' \
   'prompt'
+
+#  'emacs' \
 
 #
 # Editor
